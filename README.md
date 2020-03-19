@@ -7,4 +7,6 @@ SQL学习笔记。
 
 ### [sqlzoo.net](sqlzoo) [https://sqlzoo.net/](https://sqlzoo.net/)
 
-- [x] [0 SELECT basics](sqlzoo/0-SELECT-basics.md)
+- [x] [0 SELECT basics (Some simple queries to get you started)](sqlzoo/0-SELECT-basics.md)
+- [ ] [1 SELECT name (Some pattern matching queries)](sqlzoo/1-SELECT-name.md)
+- [x] [2 SELECT from World (In which we query the World country profile table.)](sqlzoo/2-SELECT-from-World.md)
