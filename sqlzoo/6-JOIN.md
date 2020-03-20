@@ -231,3 +231,103 @@ LEFT OUTER JOIN goal ON goal.matchid = game.id
 GROUP BY goal.matchid
 ORDER BY game.mdate, goal.matchid, game.team1, game.team2;
 ```
+
+## [Music Tutorial](https://sqlzoo.net/wiki/Music_Tutorial)
+
+The Music database
+This tutorial introduces the notion of a join. The music has two tables: album and track.
+
+    album(asin, title, artist, price, release, label, rank)
+    track(album, dsk, posn, song)
+
+1. Find the title and artist who recorded the song 'Alison'.
+
+    ```SQL
+    SELECT title, artist
+    FROM album JOIN track ON (album.asin=track.album)
+    WHERE song = 'Alison';
+    ```
+
+2. Which artist recorded the song 'Exodus'?
+
+    ```SQL
+    SELECT artist
+    FROM album JOIN track ON (album.asin=track.album)
+    WHERE song = 'Exodus';
+    ```
+
+3. Show the song for each track on the album 'Blur'
+
+    ```SQL
+    SELECT song
+    FROM track JOIN album ON (album.asin=track.album)
+    WHERE album.title = 'Blur';
+    ```
+
+4. For each album show the title and the total number of track.
+
+    ```SQL
+    SELECT title, COUNT(track.song)
+    FROM album JOIN track ON (album.asin=track.album)
+    GROUP BY title;
+    ```
+
+5. For each album show the title and the total number of tracks containing the word 'Heart' (albums with no such tracks need not be shown).
+
+    ```SQL
+    SELECT album.title, COUNT(track.song)
+    FROM album JOIN track ON album.asin=track.album
+    WHERE track.song LIKE '%Heart%'
+    GROUP BY album.title;
+    ```
+
+6. A "title track" is where the song is the same as the title. Find the title tracks.
+
+    ```SQL
+    SELECT track.song
+    FROM track JOIN album ON album.asin=track.album
+    WHERE track.song = album.title;
+    ```
+
+7. An "eponymous" album is one where the title is the same as the artist (for example the album 'Blur' by the band 'Blur'). Show the eponymous albums.
+
+    ```SQL
+    SELECT album.artist
+    FROM album
+    WHERE title = artist;
+    ```
+
+8. Find the songs that appear on more than 2 albums. Include a count of the number of times each shows up.
+
+    ```SQL
+    # 手动对比answer正确
+    SELECT track.song, COUNT(DISTINCT asin)
+    FROM track JOIN album ON album.asin=track.album
+    GROUP BY track.song
+    HAVING COUNT(DISTINCT album.asin) > 2
+    ORDER BY track.song;
+    ``
+
+9. A "good value" album is one where the price per track is less than 50 pence. Find the good value album - show the title, the price and the number of tracks.
+
+    ```SQL
+    SELECT album.title, album.price, COUNT(song)
+    FROM album
+    JOIN track ON album.asin = track.album
+    GROUP BY album.asin
+    HAVING album.price/COUNT(track.song) < 0.5
+    ORDER BY album.title;
+    ```
+
+10. Wagner's Ring cycle has an imposing 173 tracks, Bing Crosby clocks up 101 tracks.
+
+    List albums so that the album with the most tracks is first. Show the title and the number of tracks
+Where two or more albums have the same number of tracks you should order alphabetically
+
+    ```SQL
+    SELECT album.title, COUNT(track.song)
+    FROM album
+    JOIN track ON album.asin = track.album
+    GROUP BY album.title
+    ORDER BY COUNT(track.song) DESC, album.title;
+    ```
