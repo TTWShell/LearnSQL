@@ -15,3 +15,4 @@ Solutions to the challenges on [https://sqlzoo.net/](https://sqlzoo.net/).
 - [x] [4 SELECT within SELECT (In which we form queries using other queries)](sqlzoo/4-SELECT-within-SELECT.md)
 - [x] [5 SUM and COUNT (In which we apply aggregate functions)](sqlzoo/5-SUM-and-COUNT.md)
 - [x] [6 JOIN (In which we join two tables; game and goals)](sqlzoo/6-JOIN.md)
+- [x] [7 More JOIN operations (In which we join actors to movies in the Movie Database)](sqlzoo/7-More-JOIN-operations.md)
