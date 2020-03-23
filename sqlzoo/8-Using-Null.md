@@ -121,6 +121,8 @@ LEFT JOIN teacher ON teacher.dept = dept.id
 GROUP BY dept.name;
 ```
 
+## Using [CASE](https://sqlzoo.net/wiki/CASE)
+
 ### 9. 
 
 Use CASE to show the name of each teacher followed by 'Sci' if the teacher is in dept 1 or 2 and 'Art' otherwise.
@@ -142,4 +144,108 @@ SELECT teacher.name, CASE
     ELSE 'None' END 
 FROM teacher
 LEFT JOIN dept ON teacher.dept = dept.id;
+```
+
+# [previously Scottish Parliament](https://sqlzoo.net/wiki/Scottish_Parliament)
+
+## Scottish Parliament
+
+The data includes all Members of the Scottish Parliament (MSPs) in 1999. Most MSPs belong to a political party. Some parties have a leader who is an MSP. There are two tables:
+
+msp
+| Name | Party | Constituency |
+| --- | --- | --- |
+| Adam MSP, Brian | SNP | North East Scotland |
+| Aitken MSP, Bill | Con | Glasgow |
+| Alexander MSP, Ms Wendy | Lab | Paisley North |
+| ... Total number of records: 129 |
+
+party
+| Code | Name | Leader |
+| --- | --- | --- |
+| Con | Conservative | McLetchie MSP, David |
+| Green | Green |  |
+| Lab | Labour | Dewar MSP, Rt Hon Donald |
+| ... Total number of records: 9 |
+
+[Selecting NULL values](https://sqlzoo.net/wiki/Selecting_NULL_values.)
+
+## Dealing with NULL
+
+### 1.
+
+One MSP was kicked out of the Labour party and has no party. Find him.
+
+Why we cannot use =
+You might think that the phrase dept=NULL would work here. It doesn't. This is because NULL "propogates". Any normal expression that includes NULL is itself NULL, thus the value of the expressions 2+NULL and party || NULL and NULL=NULL for example are all NULL.
+
+Theory
+
+The NULL value does not cause a type error, however it does infect everything it touches with NULL-ness. We call this element the bottom value for the algebra - but we don't snigger because we are grown-ups. [Bottom Type.](http://c2.com/cgi/wiki?BottomType)
+
+```SQL
+SELECT msp.name FROM msp WHERE party IS NULL;
+```
+
+### 2.
+
+Obtain a list of all parties and leaders.
+
+```SQL
+SELECT name, leader FROM party;
+```
+
+### 3.
+
+Give the party and the leader for the parties which have leaders.
+
+```SQL
+SELECT name, leader FROM party WHERE leader IS NOT NULL;
+```
+
+### 4.
+
+Obtain a list of all parties which have at least one MSP.
+
+```SQL
+SELECT DISTINCT party.name FROM party
+LEFT JOIN msp ON msp.party = party.code
+GROUP BY party.name
+HAVING COUNT(msp.party) > 0;
+
+SELECT DISTINCT( party.name )
+FROM party JOIN msp ON party.code = msp.party
+WHERE  msp.name IS NOT NULL;
+```
+
+## [Outer joins](https://sqlzoo.net/wiki/Outer_joins)
+
+### 5.
+
+Obtain a list of all MSPs by name, give the name of the MSP and the name of the party where available. Be sure that Canavan MSP, Dennis is in the list. Use ORDER BY msp.name to sort your output by MSP.
+
+```SQL
+SELECT msp.name, party.name FROM msp
+LEFT JOIN party ON msp.party = party.code
+ORDER BY msp.name;
+```
+
+### 6.
+
+Obtain a list of parties which have MSPs, include the number of MSPs.
+
+```SQL
+SELECT party.name, COUNT(msp.name) FROM party
+JOIN msp ON msp.party = party.code
+GROUP BY party.name;
+```
+
+### 7.
+
+A list of parties with the number of MSPs; include parties with no MSPs.
+
+```SQL
+SELECT party.name, COUNT(msp.name) FROM party
+LEFT JOIN msp ON msp.party = party.code
+GROUP BY party.name;
 ```
