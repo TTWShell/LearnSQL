@@ -19,3 +19,4 @@ Solutions to the challenges on [https://sqlzoo.net/](https://sqlzoo.net/).
 - [x] [8 Using Null (In which we look at teachers in departments)](sqlzoo/8-Using-Null.md)
 - [x] [8+ Numeric Examples (In which we look at a survey and deal with some more complex calculations)](sqlzoo/8+-Numeric-Examples.md)
 - [x] [9- Window function (In which we examine UK general election results)](sqlzoo/9--Window-function.md)
+- [x] [9 Self join (In which we join Edinburgh bus routes to Edinburgh bus routes.)](sqlzoo/9-Self-join.md)
