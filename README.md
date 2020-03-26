@@ -18,3 +18,4 @@ Solutions to the challenges on [https://sqlzoo.net/](https://sqlzoo.net/).
 - [x] [7 More JOIN operations (In which we join actors to movies in the Movie Database)](sqlzoo/7-More-JOIN-operations.md)
 - [x] [8 Using Null (In which we look at teachers in departments)](sqlzoo/8-Using-Null.md)
 - [x] [8+ Numeric Examples (In which we look at a survey and deal with some more complex calculations)](sqlzoo/8+-Numeric-Examples.md)
+- [x] [9- Window function (In which we examine UK general election results)](sqlzoo/9--Window-function.md)
