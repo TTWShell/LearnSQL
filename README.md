@@ -1,8 +1,10 @@
 # LearnSQL
 
-SQL学习笔记。
+The learning notes of SQL.
 
-## SQL必知必会
+## SQL in 10 Minutes, Sams Teach Yourself
+
+- [x] [SQL in 10 Minutes](SQL-in-10-Minutes.md)
 
 ## [sqlzoo.net](sqlzoo)
 
