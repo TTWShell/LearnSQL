@@ -154,3 +154,24 @@ JOIN Person AS p2 ON p2.Email = p1.Email WHERE p2.Id > p1.Id;
 
 DELETE p2 FROM Person AS p1, Person AS p2
 WHERE p1.Email = p2.Email AND p2.Id > p1.Id;
+
+# 197. Rising Temperature
+SELECT B.Id FROM Weather AS A
+JOIN Weather AS B ON A.RecordDate = DATE_SUB(B.RecordDate, interval 1 day)
+WHERE A.Temperature < B.Temperature;
+
+SELECT Id
+FROM (
+        SELECT
+            Id,
+            if(Temperature>@prev,if(datediff(RecordDate,@prev_date)=1, 1, 0), 0)
+            AS flag,
+            @prev:=Temperature,
+            @prev_date:=RecordDate
+        FROM
+            Weather, (SELECT @prev:=1000,@prev_date:="1994-08-01") init
+        ORDER BY
+            RecordDate
+    ) AS t
+WHERE
+    t.flag > 0;
