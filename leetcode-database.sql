@@ -195,3 +195,7 @@ GROUP BY Day;
 SELECT name, population, area 
 FROM World
 WHERE area >= 3000000 OR population >= 25000000;
+
+# 596. Classes More Than 5 Students
+SELECT class FROM courses
+GROUP BY class HAVING COUNT(DISTINCT student) >= 5;
