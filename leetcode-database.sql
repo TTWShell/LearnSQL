@@ -216,3 +216,14 @@ SELECT  id, movie, description, rating
 FROM cinema
 WHERE description != 'boring' AND id % 2 = 1
 ORDER BY rating DESC;
+
+# 626. Exchange Seats
+SELECT a.id,
+    IFNULL(
+        CASE WHEN a.id % 2 = 1 THEN b.student ELSE c.student END,
+        a.student
+    ) AS student
+FROM seat AS a
+LEFT JOIN seat AS b ON b.id = a.id + 1
+LEFT JOIN seat AS c ON c.id = a.id - 1
+ORDER BY id;
