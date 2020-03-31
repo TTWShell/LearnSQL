@@ -62,3 +62,20 @@ FROM (
     FROM Logs, (SELECT @prev := -1) init) tmp, (SELECT @cnt := 0) init1
 ) AS tmp1
 WHERE cnt > 2;
+
+# 181. Employees Earning More Than Their Managers
+SELECT a.Name AS Employee FROM Employee a
+JOIN Employee b ON a.ManagerId = b.Id
+WHERE a.Salary > b.Salary; -- 541ms
+
+SELECT Name AS 'Employee'
+FROM Employee
+INNER JOIN
+    (
+        SELECT DISTINCT E1.Id AS 'ManId', E1.Salary AS 'ManSalary'
+        FROM Employee E1
+        INNER JOIN Employee E2
+        ON E1.Id = E2.ManagerId
+    ) Manager
+    ON Employee.ManagerId = Manager.ManId
+WHERE Employee.Salary > Manager.ManSalary; -- 301ms
