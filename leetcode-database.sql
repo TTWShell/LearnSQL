@@ -210,3 +210,9 @@ WHERE
         (t2.id - t1.id = 1 AND t1.id - t3.id = 1 AND t2.id - t3.id = 2)
     )
 ORDER BY t1.id;
+
+# 620. Not Boring Movies
+SELECT  id, movie, description, rating
+FROM cinema
+WHERE description != 'boring' AND id % 2 = 1
+ORDER BY rating DESC;
