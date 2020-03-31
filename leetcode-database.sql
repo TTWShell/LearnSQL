@@ -79,3 +79,6 @@ INNER JOIN
     ) Manager
     ON Employee.ManagerId = Manager.ManId
 WHERE Employee.Salary > Manager.ManSalary; -- 301ms
+
+# 182. Duplicate Emails
+SELECT Email FROM Person GROUP BY Email HAVING COUNT(*) > 1;
