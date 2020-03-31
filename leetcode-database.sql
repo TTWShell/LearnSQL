@@ -82,3 +82,12 @@ WHERE Employee.Salary > Manager.ManSalary; -- 301ms
 
 # 182. Duplicate Emails
 SELECT Email FROM Person GROUP BY Email HAVING COUNT(*) > 1;
+
+# 183. Customers Who Never Order
+SELECT C.Name AS Customers FROM Customers AS C
+LEFT JOIN Orders AS O ON C.Id = O.CustomerId
+WHERE O.Id IS NULL;
+
+SELECT Name AS Customers
+FROM Customers
+WHERE Id NOT IN (SELECT CustomerId FROM orders);
