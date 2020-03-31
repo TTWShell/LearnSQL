@@ -91,3 +91,23 @@ WHERE O.Id IS NULL;
 SELECT Name AS Customers
 FROM Customers
 WHERE Id NOT IN (SELECT CustomerId FROM orders);
+
+# 184. Department Highest Salary
+SELECT D.Name AS Department, E.Name AS Employee, E.Salary AS Salary
+FROM Employee AS E
+JOIN Department AS D ON E.DepartmentId = D.Id
+WHERE E.Salary = (
+    SELECT MAX(Salary)
+    FROM Employee
+    WHERE DepartmentId = E.DepartmentId
+); -- 654 ms
+
+SELECT D.Name AS Department, E.Name AS Employee, E.Salary AS Salary
+FROM Employee E, (
+        SELECT MAX(Salary) AS Salary, DepartmentId
+        FROM Employee
+        GROUP BY DepartmentId
+    ) AS M
+JOIN Department AS D ON M.DepartmentId = D.Id
+WHERE E.Salary = M.Salary AND E.DepartmentId = M.DepartmentId; -- 278ms
+
