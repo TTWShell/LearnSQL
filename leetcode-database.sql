@@ -199,3 +199,14 @@ WHERE area >= 3000000 OR population >= 25000000;
 # 596. Classes More Than 5 Students
 SELECT class FROM courses
 GROUP BY class HAVING COUNT(DISTINCT student) >= 5;
+
+# 601. Human Traffic of Stadium
+SELECT DISTINCT t1.id, t1.visit_date, t1.people
+FROM stadium AS t1, stadium AS t2, stadium AS t3
+WHERE
+    (t1.people >= 100 AND t2.people >= 100 AND t3.people >= 100) AND (
+        (t1.id - t2.id = 1 AND t2.id - t3.id = 1 AND t1.id - t3.id = 2) OR
+        (t3.id - t2.id = 1 AND t2.id - t1.id = 1 AND t3.id - t1.id = 2) OR
+        (t2.id - t1.id = 1 AND t1.id - t3.id = 1 AND t2.id - t3.id = 2)
+    )
+ORDER BY t1.id;
