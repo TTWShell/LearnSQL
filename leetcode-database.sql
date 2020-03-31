@@ -111,3 +111,32 @@ FROM Employee E, (
 JOIN Department AS D ON M.DepartmentId = D.Id
 WHERE E.Salary = M.Salary AND E.DepartmentId = M.DepartmentId; -- 278ms
 
+# 185. Department Top Three Salaries
+SELECT D.Name AS Department, E.Name AS Employee, E.Salary AS Salary
+FROM Employee AS E
+JOIN Department AS D ON E.DepartmentId = D.Id
+WHERE E.Salary >= IFNULL((
+    SELECT DISTINCT Salary
+    FROM Employee
+    WHERE DepartmentId = E.DepartmentId
+    ORDER BY Salary DESC
+    LIMIT 1 OFFSET 2
+), 0)
+ORDER BY Department, Employee, Salary DESC; -- 907ms
+
+SELECT d.Name Department, ranked.Name Employee, ranked.Salary Salary
+FROM
+	# Rank employee salaries within the same department using subquery.
+    (SELECT Name,
+		# A simpler case @rank := IF(@department = DepartmentId, @rank + 1, 1) would set different ranks for same salaries.
+        @rank := IF(
+			@department = DepartmentId,
+			IF(@salary = Salary, @rank, @rank + 1),
+			1) AS rank,
+        @department := DepartmentId AS DepartmentId,
+        @salary := Salary AS Salary
+    FROM Employee, (SELECT @rank := 0, @department := 0, @salary := 0) AS vars
+    ORDER BY DepartmentId ASC, Salary DESC
+	) ranked
+INNER JOIN Department d ON d.Id = ranked.DepartmentId
+WHERE ranked.rank <= 3; -- 380 ms
