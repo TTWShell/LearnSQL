@@ -175,3 +175,18 @@ FROM (
     ) AS t
 WHERE
     t.flag > 0;
+
+# 262. Trips and Users
+SELECT T.Request_at AS Day, ROUND(
+        SUM(
+            CASE WHEN T.Status = 'completed ' THEN 0 ELSE 1 END
+        ) / COUNT(*)
+    , 2) AS 'Cancellation Rate'
+FROM Trips AS T
+JOIN Users AS UC ON UC.Users_Id = T.Client_Id
+JOIN Users AS UD ON UD.Users_Id = T.Driver_Id
+WHERE
+    T.Request_at BETWEEN '2013-10-01' AND '2013-10-03' AND
+    UC.Banned = 'No' AND
+    UD.Banned = 'No'
+GROUP BY Day;
