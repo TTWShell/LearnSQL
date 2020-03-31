@@ -227,3 +227,9 @@ FROM seat AS a
 LEFT JOIN seat AS b ON b.id = a.id + 1
 LEFT JOIN seat AS c ON c.id = a.id - 1
 ORDER BY id;
+
+# 627. Swap Salary
+UPDATE Salary
+SET sex = (CASE WHEN sex = 'm' THEN 'f' ELSE 'm' END);
+
+UPDATE salary SET sex = IF(sex = 'm', 'f', 'm');
