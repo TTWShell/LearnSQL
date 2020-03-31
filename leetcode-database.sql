@@ -179,7 +179,7 @@ WHERE
 # 262. Trips and Users
 SELECT T.Request_at AS Day, ROUND(
         SUM(
-            CASE WHEN T.Status = 'completed ' THEN 0 ELSE 1 END
+            CASE WHEN T.Status = 'completed' THEN 0 ELSE 1 END
         ) / COUNT(*)
     , 2) AS 'Cancellation Rate'
 FROM Trips AS T
