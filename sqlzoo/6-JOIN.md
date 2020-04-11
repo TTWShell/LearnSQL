@@ -300,7 +300,6 @@ This tutorial introduces the notion of a join. The music has two tables: album a
 8. Find the songs that appear on more than 2 albums. Include a count of the number of times each shows up.
 
     ```SQL
-    # 手动对比answer正确
     SELECT track.song, COUNT(DISTINCT asin)
     FROM track JOIN album ON album.asin=track.album
     GROUP BY track.song

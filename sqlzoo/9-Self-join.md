@@ -116,7 +116,6 @@ Hint
 Self-join twice to find buses that visit Craiglockhart and Lochend, then join those on matching stops.
 
 ```SQL
-# 对比好像没错
 SELECT DISTINCT a.num, a.company, stopb.name, c.num, c.company
 FROM route a 
     JOIN route b ON (a.company = b.company AND a.num = b.num)
