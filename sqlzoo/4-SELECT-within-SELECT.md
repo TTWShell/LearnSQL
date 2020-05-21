@@ -113,6 +113,12 @@ WHERE
 SELECT continent, name, area FROM world x
 WHERE area >= (
     SELECT MAX(area) FROM world y WHERE y.continent=x.continent);
+# 这里仅仅是学习select子句，实际可以这么写
+SELECT b.continent, b.name, b.area FROM (
+    SELECT continent, MAX(area) as max_area FROM world GROUP BY continent
+) AS a
+JOIN world AS b
+ON a.continent = b.continent AND a.max_area = b.area;
 ```
 
 ### 8. First country of each continent (alphabetically)
